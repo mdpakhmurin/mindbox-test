@@ -1,0 +1,56 @@
+-- Категория
+CREATE TABLE CATEGORY (
+  Id INTEGER PRIMARY KEY,
+  Name TEXT NOT NULL
+);
+
+-- Продукт
+CREATE TABLE PRODUCT (
+  Id INTEGER PRIMARY KEY,
+  Name TEXT NOT NULL
+);
+
+-- Связь многие-ко-многим категорий и продуктов
+CREATE TABLE CATEGORY_PRODUCT (
+    CategoryId INT,
+    ProductId INT,
+    PRIMARY KEY (CategoryId, ProductId),
+    FOREIGN KEY (ProductId) REFERENCES PRODUCT(Id),
+    FOREIGN KEY (CategoryId) REFERENCES CATEGORY(Id)
+);
+
+-- Заполнение категорий
+INSERT INTO CATEGORY (Id, Name)
+VALUES (1, 'напитки'),
+       (2, 'еда'),
+       (3, 'приборы'),
+       (5, 'мебель');
+       
+-- Заполнение продуктов
+INSERT INTO PRODUCT (Id, Name)
+VALUES (1, 'сок'),
+       (2, 'вода'),
+       (3, 'яблоко'),
+       (4, 'вилка'),
+       (5, 'нож'),
+       (8, 'кот');
+       
+-- Заполнение связей категория-продукт
+INSERT INTO CATEGORY_PRODUCT (CategoryId, ProductId)
+VALUES (1, 1), -- напитки-сок
+       (1, 2), -- напитки-вода
+       (2, 1), -- еда-сок
+       (2, 2), -- еда-вода
+       (2, 3), -- еда-яблоко
+       (3, 4), -- приборы-вилка
+       (3, 5); -- приборы-нож
+       
+
+-- В базе данных MS SQL Server есть продукты и категории. Одному продукту может соответствовать много
+-- категорий, в одной категории может быть много продуктов. Напишите SQL запрос для выбора всех пар
+-- «Имя продукта – Имя категории». Если у продукта нет категорий, то его имя все равно должно
+-- выводиться
+SELECT p.Name, c.Name
+FROM PRODUCT p
+LEFT JOIN CATEGORY_PRODUCT cp ON cp.ProductId = p.Id 
+LEFT JOIN CATEGORY c ON cp.CategoryId = c.Id;
