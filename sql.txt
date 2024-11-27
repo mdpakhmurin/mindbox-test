@@ -1,14 +1,16 @@
+
 -- Категория
 CREATE TABLE CATEGORY (
   Id INTEGER PRIMARY KEY,
-  Name TEXT NOT NULL
+  Name VARCHAR(150) NOT NULL
 );
 
 -- Продукт
 CREATE TABLE PRODUCT (
   Id INTEGER PRIMARY KEY,
-  Name TEXT NOT NULL
+  Name VARCHAR(150) NOT NULL
 );
+
 
 -- Связь многие-ко-многим категорий и продуктов
 CREATE TABLE CATEGORY_PRODUCT (
